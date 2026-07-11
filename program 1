@@ -31,3 +31,21 @@ int main()
     return 0;
 }
 
+
+
+
+
+
+
+
+output:
+
+
+--- Parent Process ---
+Parent Process ID (PID) : 498
+Parent's Parent ID (PPID): 497
+Child Process ID        : 502
+
+--- Child Process ---
+Child Process ID (PID)  : 502
+Parent Process ID (PPID): 498
