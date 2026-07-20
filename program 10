@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <sys/ipc.h>
+#include <sys/msg.h>
+#include <string.h>
+
+// Structure for message
+struct message {
+    long msg_type;
+    char msg_text[100];
+};
+
+int main()
+{
+    struct message msg;
+
+    // Generate unique key
+    key_t key = ftok("msgfile", 65);
+
+    // Create message queue
+    int msgid = msgget(key, 0666 | IPC_CREAT);
+
+    // Write message
+    msg.msg_type = 1;
+    strcpy(msg.msg_text, "Hello! This is a message using Message Queue.");
+
+    // Send message
+    msgsnd(msgid, &msg, sizeof(msg.msg_text), 0);
+    printf("Message Sent: %s\n", msg.msg_text);
+
+    // Receive message
+    msgrcv(msgid, &msg, sizeof(msg.msg_text), 1, 0);
+    printf("Message Received: %s\n", msg.msg_text);
+
+    // Delete message queue
+    msgctl(msgid, IPC_RMID, NULL);
+
+    return 0;
+}
+
+
+OUTPUT:
+
+Message Sent: Hello! This is a message using Message Queue.
+Message Received: Hello! This is a message using Message Queue.
