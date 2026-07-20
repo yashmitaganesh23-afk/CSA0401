@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <string.h>
+#include <unistd.h>
+
+int main()
+{
+    key_t key;
+    int shmid;
+    char *str;
+
+    // Generate unique key
+    key = ftok("shmfile", 65);
+
+    // Create shared memory
+    shmid = shmget(key, 1024, 0666 | IPC_CREAT);
+
+    // Attach shared memory
+    str = (char *)shmat(shmid, NULL, 0);
+
+    printf("Writing data to shared memory...\n");
+    strcpy(str, "Hello! This message is stored in shared memory.");
+
+    printf("Data Written: %s\n", str);
+
+    printf("Reading data from shared memory...\n");
+    printf("Data Read: %s\n", str);
+
+    // Detach shared memory
+    shmdt(str);
+
+    // Delete shared memory
+    shmctl(shmid, IPC_RMID, NULL);
+
+    return 0;
+}
+
+
+
+OUTPUT:
+
+Writing data to shared memory...
+Data Written: Hello! This message is stored in shared memory.
+Reading data from shared memory...
+Data Read: Hello! This message is stored in shared memory.
