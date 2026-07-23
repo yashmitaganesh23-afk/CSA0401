@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <pthread.h>
+
+void *threadFunction(void *arg)
+{
+    printf("Thread created successfully.\n");
+
+    // Demonstrate pthread_equal()
+    if (pthread_equal(pthread_self(), pthread_self()))
+    {
+        printf("Thread IDs are equal.\n");
+    }
+
+    printf("Thread is exiting.\n");
+
+    // Demonstrate pthread_exit()
+    pthread_exit(NULL);
+}
+
+int main()
+{
+    pthread_t t1;
+
+    // Demonstrate pthread_create()
+    pthread_create(&t1, NULL, threadFunction, NULL);
+
+    // Demonstrate pthread_join()
+    pthread_join(t1, NULL);
+
+    printf("Main thread resumed after join.\n");
+
+    return 0;
+}
+
+
+OUTPUT:
+Thread created successfully.
+Thread IDs are equal.
+Thread is exiting.
+Main thread resumed after join.
