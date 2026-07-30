@@ -1,0 +1,61 @@
+#include <stdio.h>
+
+int main()
+{
+    int n, i;
+    char fileName[30];
+
+    printf("Enter the file name: ");
+    scanf("%s", fileName);
+
+    printf("Enter the number of records: ");
+    scanf("%d", &n);
+
+    printf("\nSequential File Allocation\n");
+    printf("------------------------------\n");
+    printf("File Name : %s\n\n", fileName);
+
+    printf("Record No\tBlock No\n");
+
+    for(i = 0; i < n; i++)
+    {
+        printf("%d\t\t%d\n", i + 1, i + 1);
+    }
+
+    printf("\nAccessing records sequentially:\n");
+
+    for(i = 0; i < n; i++)
+    {
+        printf("Reading Record %d\n", i + 1);
+    }
+
+    return 0;
+}
+
+OUTPUT:
+Enter the file name: STUDENT
+Enter the number of records: 8
+
+Sequential File Allocation
+------------------------------
+File Name : STUDENT
+
+Record No	Block No
+1		1
+2		2
+3		3
+4		4
+5		5
+6		6
+7		7
+8		8
+
+Accessing records sequentially:
+Reading Record 1
+Reading Record 2
+Reading Record 3
+Reading Record 4
+Reading Record 5
+Reading Record 6
+Reading Record 7
+Reading Record 8
