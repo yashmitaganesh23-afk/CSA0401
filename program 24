@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+int main()
+{
+    int fd;
+    char data[] = "Hello UNIX";
+
+    fd = open("test.txt", O_CREAT | O_WRONLY, 0644);
+
+    if (fd < 0)
+    {
+        printf("File cannot be opened\n");
+        return 1;
+    }
+
+    write(fd, data, sizeof(data));
+    close(fd);
+
+    printf("File created and data written successfully.\n");
+
+    return 0;
+}
+
+OUTPUT:
+File created and data written successfully.
