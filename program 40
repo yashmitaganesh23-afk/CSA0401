@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+int main()
+{
+    int r, w, x;
+    int owner, group, others;
+
+    printf("Enter Owner permissions (r w x): ");
+    scanf("%d%d%d", &r, &w, &x);
+    owner = r * 4 + w * 2 + x;
+
+    printf("Enter Group permissions (r w x): ");
+    scanf("%d%d%d", &r, &w, &x);
+    group = r * 4 + w * 2 + x;
+
+    printf("Enter Others permissions (r w x): ");
+    scanf("%d%d%d", &r, &w, &x);
+    others = r * 4 + w * 2 + x;
+
+    printf("\nPermission: %d%d%d\n", owner, group, others);
+
+    return 0;
+}
+
+OUTPUT:
+Enter Owner permissions (r w x): 1 0 1
+Enter Group permissions (r w x): 1 1 0
+Enter Others permissions (r w x): 1 1 1
+
+Permission: 567
