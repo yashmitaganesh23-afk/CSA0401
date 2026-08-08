@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+int main()
+{
+    FILE *fp;
+    char data[100];
+
+    /* Create and Write */
+    fp = fopen("file.txt", "w");
+
+    printf("Enter data: ");
+    scanf(" %[^\n]", data);
+
+    fprintf(fp, "%s", data);
+    fclose(fp);
+
+    printf("\nFile created and data written successfully.\n");
+
+    /* Read */
+    fp = fopen("file.txt", "r");
+
+    fgets(data, 100, fp);
+    printf("Data in file: %s\n", data);
+
+    fclose(fp);
+
+    /* Delete */
+    if (remove("file.txt") == 0)
+        printf("File deleted successfully.\n");
+    else
+        printf("File deletion failed.\n");
+
+    return 0;
+}
+
+OUTPUT:
+Enter data:user 1
+
+File created and data written successfully.
+Data in file: user 1
+File deleted successfully.
