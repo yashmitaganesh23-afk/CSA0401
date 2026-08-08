@@ -1,0 +1,119 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Employee
+{
+    int id;
+    char name[30];
+    float salary;
+};
+
+int main()
+{
+    FILE *fp;
+    struct Employee emp;
+    int choice, record;
+
+    fp = fopen("employee.dat", "rb+");
+
+    if (fp == NULL)
+    {
+        fp = fopen("employee.dat", "wb+");
+
+        if (fp == NULL)
+        {
+            printf("Unable to open file.\n");
+            return 1;
+        }
+    }
+
+    while (1)
+    {
+        printf("\n--- RANDOM ACCESS FILE ---\n");
+        printf("1. Add Employee\n");
+        printf("2. Display Employee\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+            case 1:
+                printf("Enter Employee ID: ");
+                scanf("%d", &emp.id);
+
+                printf("Enter Employee Name: ");
+                scanf("%s", emp.name);
+
+                printf("Enter Salary: ");
+                scanf("%f", &emp.salary);
+
+                fseek(fp, 0, SEEK_END);
+                fwrite(&emp, sizeof(emp), 1, fp);
+
+                printf("Employee details saved successfully.\n");
+                break;
+
+            case 2:
+                printf("Enter record number to access: ");
+                scanf("%d", &record);
+
+                fseek(fp, (record - 1) * sizeof(emp), SEEK_SET);
+
+                if (fread(&emp, sizeof(emp), 1, fp) == 1)
+                {
+                    printf("\nEmployee Details\n");
+                    printf("ID     : %d\n", emp.id);
+                    printf("Name   : %s\n", emp.name);
+                    printf("Salary : %.2f\n", emp.salary);
+                }
+                else
+                {
+                    printf("Record not found.\n");
+                }
+
+                break;
+
+            case 3:
+                fclose(fp);
+                return 0;
+
+            default:
+                printf("Invalid choice.\n");
+        }
+    }
+}
+
+
+OUTPUT:
+--- RANDOM ACCESS FILE ---
+1. Add Employee
+2. Display Employee
+3. Exit
+Enter your choice: 1
+Enter Employee ID: 1001
+Enter Employee Name: Yash
+Enter Salary: 50000
+Employee details saved successfully.
+
+--- RANDOM ACCESS FILE ---
+1. Add Employee
+2. Display Employee
+3. Exit
+Enter your choice: 1
+Enter Employee ID: 1002
+Enter Employee Name: Raj
+Enter Salary: 45000
+Employee details saved successfully.
+
+--- RANDOM ACCESS FILE ---
+1. Add Employee
+2. Display Employee
+3. Exit
+Enter your choice: 2
+Enter record number to access: 2
+
+Employee Details
+ID     : 1002
+Name   : Raj
+Salary : 45000.00
