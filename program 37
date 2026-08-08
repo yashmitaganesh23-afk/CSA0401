@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int req[20], n, head, total = 0, i;
+
+    printf("Enter number of requests: ");
+    scanf("%d", &n);
+
+    printf("Enter request queue:\n");
+
+    for (i = 0; i < n; i++)
+        scanf("%d", &req[i]);
+
+    printf("Enter initial head position: ");
+    scanf("%d", &head);
+
+    printf("\nSeek Sequence: %d", head);
+
+    for (i = 0; i < n; i++)
+    {
+        total += abs(head - req[i]);
+        head = req[i];
+
+        printf(" -> %d", head);
+    }
+
+    printf("\nTotal Seek Time = %d\n", total);
+
+    return 0;
+}
+
+OUTPUT:
+Enter number of requests: 3
+Enter request queue:
+98
+37
+142
+Enter initial head position: 54
+5454
+5Seek Sequence: 54 -> 98 -> 37 -> 142
+Total Seek Time = 210
+54
