@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int req[20], n, head, disk, total = 0;
+    int i, j, temp;
+
+    printf("Enter number of requests: ");
+    scanf("%d", &n);
+
+    printf("Enter request queue:\n");
+
+    for (i = 0; i < n; i++)
+        scanf("%d", &req[i]);
+
+    printf("Enter initial head position: ");
+    scanf("%d", &head);
+
+    printf("Enter disk size: ");
+    scanf("%d", &disk);
+
+    for (i = 0; i < n - 1; i++)
+        for (j = i + 1; j < n; j++)
+            if (req[i] > req[j])
+            {
+                temp = req[i];
+                req[i] = req[j];
+                req[j] = temp;
+            }
+
+    printf("\nSeek Sequence: %d", head);
+
+    for (i = 0; i < n; i++)
+        if (req[i] >= head)
+        {
+            total += abs(head - req[i]);
+            head = req[i];
+            printf(" -> %d", head);
+        }
+
+    total += abs(head - (disk - 1));
+    head = disk - 1;
+    printf(" -> %d", head);
+
+    total += disk - 1;
+    head = 0;
+    printf(" -> %d", head);
+
+    for (i = 0; i < n; i++)
+        if (req[i] < head + 1)
+        {
+            total += abs(head - req[i]);
+            head = req[i];
+            printf(" -> %d", head);
+        }
+
+    printf("\nTotal Seek Time = %d\n", total);
+
+    return 0;
+}
+
+OUTPUT:
+Enter number of requests: 5
+Enter request queue:
+9
+5
+46
+79
+123
+Enter initial head position: 45
+Enter disk size: 2000 
+
+Seek Sequence: 45 -> 46 -> 79 -> 123 -> 199 -> 0
+Total Seek Time = 353
